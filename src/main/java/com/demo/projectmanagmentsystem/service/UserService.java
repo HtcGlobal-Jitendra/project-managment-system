@@ -10,34 +10,33 @@ import com.demo.projectmanagmentsystem.repository.UserRepository;
 
 import java.util.List;
 
+
+import java.util.UUID;
+import org.springframework.stereotype.Service;
+
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
 
-    @Autowired
     public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public List<User> findAllUsers() {
-        return userRepository.findAll();
-    }
-
-    public User findUserById(UUID id) {
-        return userRepository.findById(id).orElse(null);
-    }
-
-    public User saveUser(User user) {
+    public User createUser(User user) {
         return userRepository.save(user);
     }
 
-    public User updateUser(UUID id, User user) {
-        User existingUser = userRepository.findById(id).orElse(null);
-        if (existingUser != null) {
-            existingUser.setUsername(user.getUsername());
-            existingUser.setPassword(user.getPassword());
-            return userRepository.save(existingUser);
+    public User getUserById(UUID id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
+    public User updateUser(UUID id, User updatedUser) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            user.setUsername(updatedUser.getUsername());
+            user.setPassword(updatedUser.getPassword());
+            return userRepository.save(user);
         }
         return null;
     }
@@ -46,3 +45,4 @@ public class UserService {
         userRepository.deleteById(id);
     }
 }
+
