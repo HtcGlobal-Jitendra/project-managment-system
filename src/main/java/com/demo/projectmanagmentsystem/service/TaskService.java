@@ -36,4 +36,7 @@ public class TaskService {
         }
 		return task;
     }
+    public void deleteTask(UUID id) {
+        taskRepository.deleteById(id);
+    }
 }
